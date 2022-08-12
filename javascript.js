@@ -8,13 +8,26 @@ let modelURL = 'https://teachablemachine.withgoogle.com/models/vih153yuj/';
 
 function preload() {
     classifier = ml5.imageClassifier(modelURL + 'model.json');
-    img = loadImage('kontorstol.jpeg');
+    //img = loadImage('kontorstol.jpeg');
 }
 
+function uploadImage(){
+  let image_object = document.getElementById("imageUploaded")
+  let image = URL.createObjectURL(image_object.files[0])
+  img = image;
+  document.getElementById("bildeKontainer").innerHTML = '<img src="'+img+'" />';
+
+  classifyVideo();
+}
+
+
 function setup() {
-  createCanvas(400, 400);
-  classifier.classify(img, gotResult);
-  image(img, 0, 0);
+  createCanvas(400, 400);  
+}
+
+function classifyVideo(){
+  img = loadImage(img);
+  classifier.predict(img, gotResult);
 }
 
 // A function to run when we get any errors and the results
