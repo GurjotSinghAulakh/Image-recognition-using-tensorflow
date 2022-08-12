@@ -1,24 +1,31 @@
+// Initialize the Image Classifier method with MobileNet. A callback needs to be passed.
+let classifier;
 
-$("#upload_file").on("change", function(e){
-    var ext = $("#upload_file").val().split('.').pop().toLowerCase();
-    if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
-        $(".error_msg").text("Not an Image...");
-    } else {
-        $(".error_msg").text("");
-        $(".button_outer").addClass("file_uploading");
-        setTimeout(function(){
-            $(".button_outer").addClass("file_uploaded");
-        },3000);
-        var uploadedFile = URL.createObjectURL(e.target.files[0]);
-        setTimeout(function(){
-            $("#uploaded_view").append('<img src="'+uploadedFile+'" />').addClass("show");
-        },3500);
-    }
-});
+// A variable to hold the image we want to classify
+let img;
 
-$(".file_remove").on("click", function(e){
-    $("#uploaded_view").removeClass("show");
-    $("#uploaded_view").find("img").remove();
-    $(".button_outer").removeClass("file_uploading");
-    $(".button_outer").removeClass("file_uploaded");
-});
+let modelURL = 'https://teachablemachine.withgoogle.com/models/vih153yuj/';
+
+function preload() {
+    classifier = ml5.imageClassifier(modelURL + 'model.json');
+    img = loadImage('kontorstol.jpeg');
+}
+
+function setup() {
+  createCanvas(400, 400);
+  classifier.classify(img, gotResult);
+  image(img, 0, 0);
+}
+
+// A function to run when we get any errors and the results
+function gotResult(error, results) {
+  // Display error in the console
+  if (error) {
+    console.error(error);
+  } else {
+    // The results are in an array ordered by confidence.
+    console.log(results);
+    createDiv(`Label: ${results[0].label}`);
+    createDiv(`Confidence: ${nf(results[0].confidence, 0, 2)}`);
+  }
+}
