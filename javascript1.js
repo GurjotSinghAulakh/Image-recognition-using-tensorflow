@@ -16,6 +16,10 @@ function uploadImage(){
   img = image;
   document.getElementById("bildeKontainer").innerHTML = '<img src="'+img+'" class="product_img" />';
 
+  // Hiding the "Hvitevare" btn
+  const hvitevare_btn = document.querySelector('.knapp_hvitevarer');
+  hvitevare_btn.style.display = "none"
+
   classifyVideo();
 }
 
