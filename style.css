@@ -2,7 +2,7 @@ body{
     display: flex;
     align-items: center;
     flex-direction: column;
-    background-color: #FF7518;
+    background-color: #eb5e00cc;
 }
 
 .outer{
@@ -40,7 +40,7 @@ body{
 }
 
 .container{
-    width: 90%;
+    width: 50%;
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -51,11 +51,25 @@ body{
 
 #bildeKontainer img{
     margin: 5% 0;
-    border: 2px solid blue;
-    width: 350px;
+    border: 2px solid #62B95A;
+    width: 300px;
 }
 
 .result{
-    background-color: blue;
+    color: black;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-top: 1%;
 }
 
+@media only screen and (max-width: 600px) {
+    .container{
+        width: 70%;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+    .container{
+        width: 90%;
+  }
+}

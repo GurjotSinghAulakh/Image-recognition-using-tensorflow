@@ -21,7 +21,7 @@ function uploadImage(){
 
 
 function setup() {
-  createCanvas(400, 400);  
+  createCanvas(300, 300);  
 }
 
 function classifyVideo(){
@@ -37,7 +37,7 @@ function gotResult(error, results) {
   } else {
     // The results are in an array ordered by confidence.
     console.log(results);
-    document.getElementById("classified_item").innerHTML = "Kategori:  " + results[0].label
-    document.getElementById("classified_confidence").innerHTML = "Sikkerhet: " + nf(results[0].confidence, 0, 2)
+    document.getElementById("classified_item").innerHTML = "Category:  " + results[0].label + "\n";
+    document.getElementById("classified_confidence").innerHTML = "Confidence: " + nf(results[0].confidence, 0, 2);
   }
 }
