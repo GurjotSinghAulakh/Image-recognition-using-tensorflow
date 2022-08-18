@@ -32,13 +32,40 @@ function classifyVideo(){
 
 // A function to run when we get any errors and the results
 function gotResult(error, results) {
-  // Display error in the console
+  // Display error in the console, and return
   if (error) {
     console.error(error);
-  } else {
-    // The results are in an array ordered by confidence.
-    console.log(results);
-    document.getElementById("classified_item").innerHTML = "Category:  " + results[0].label + "\n";
-    document.getElementById("classified_confidence").innerHTML = "Confidence: " + nf(results[0].confidence, 0, 2);
+    alert(error);
+    return
   }
+
+  console.log(results);
+  const label = results[0].label;
+  const confidence = nf(results[0].confidence, 0, 2);
+
+  if (confidence < 0.8){
+    alert("Vi gjenkjente ikke objektet, prøv igjen.")
+    console.log(label, confidence)
+    return;
+  }
+
+  if (label == "stol"){
+    let obj_stol = classifyStol(img);
+    // trenger å jobbe litt mer med å catche og ta imot problemer her!
+    try{
+      document.getElementById("classified_item").innerHTML = "Category:  " + obj_stol.c + "\n";
+      document.getElementById("classified_confidence").innerHTML = "Confidence: " + nf(results[0].confidence, 0, 2);
+    }catch(error){
+      alert("Det skjedde noe feil")
+    }
+
 }
+
+
+
+  
+}
+
+
+//-----------------------------------finding the under-category----------------------------------
+
