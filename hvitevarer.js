@@ -70,6 +70,9 @@ function gotResult(error, results) {
     console.log(label, confidence)
     return;
   }
+
+  document.getElementById("classified_item").innerHTML = "Category:  " + (label) + "\n";
+  document.getElementById("classified_confidence").innerHTML = "Confidence: " + nf(confidence, 0, 2);
   
   // Stol
   if (label == "Stol"){
@@ -79,9 +82,6 @@ function gotResult(error, results) {
     stol_underC.then(function(results){
 
       if (results[0].confidence < 0.8){
-
-        document.getElementById("classified_item").innerHTML = "Category:  " + (label) + "\n";
-        document.getElementById("classified_confidence").innerHTML = "Confidence: " + nf(confidence, 0, 2);
         alert("Vi gjenkjente ikke hvilken stol du har valgt, prøv igjen.") 
       }
       else {
