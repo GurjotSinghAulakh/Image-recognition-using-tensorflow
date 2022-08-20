@@ -35,6 +35,13 @@ function outputAllImages(startPath, filters){
 
 let img;
 
+for (let i = 0; i<1138; i++){
+  img = "bilder/stol/image"+i+".jpg"
+  classifyObj()
+}
+
+
+
 // Initialize the Image Classifier method with MobileNet. A callback needs to be passed.
 let classifier;
 let classifierStol;
@@ -69,8 +76,7 @@ function setup() {
  * It loads the image, then runs the classifier on it, and then runs the gotResult function
  */
 
-function classifyObj(image){
-  img = image;
+function classifyObj(){
   img = loadImage(img);
   classifier.predict(img, gotResult);
 }
@@ -113,32 +119,4 @@ function gotResult(error, results) {
     });
   }
 }
-// ------------------------------------
 
-var path = require('path'),
-fs = require('fs');
-
-function fromDir(startPath, filter) {
-
-    //console.log('Starting from dir '+startPath+'/');
-
-    if (!fs.existsSync(startPath)) {
-        console.log("no dir ", startPath);
-        return;
-    }
-
-    var files = fs.readdirSync(startPath);
-    for (var i = 0; i < files.length; i++) {
-        var filename = path.join(startPath, files[i]);  
-        
-        if (filename.endsWith(filter)) {
-          classifyObj(filename)
-        };
-    };
-};
-
-
-  const imageFolderPath = [path.resolve(__dirname, "bilder")] 
-  const imagesFormats = [".jpg", ".jpeg", ".png"]
-
-  fromDir("./bilder", ".jpeg");
