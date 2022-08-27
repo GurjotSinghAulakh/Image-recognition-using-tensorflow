@@ -65,7 +65,7 @@ function gotResult(error, results) {
     return
   }
 
-  if (confidence < 0.8){
+  if (confidence < 0.9){
     alert("Vi gjenkjente ikke objektet, prøv igjen.")
     console.log(label, confidence)
     return;
@@ -81,7 +81,7 @@ function gotResult(error, results) {
 
     stol_underC.then(function(results){
 
-      if (results[0].confidence < 0.8){
+      if (results[0].confidence < 0.9){
         alert("Vi gjenkjente ikke hvilken stol du har valgt, prøv igjen.") 
       }
       else {
