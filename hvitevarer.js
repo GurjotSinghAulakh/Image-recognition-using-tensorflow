@@ -6,7 +6,7 @@ let classifierStol;
 let img;
 
 // Checks wgich appliance is being classified and returns the correct object
-let modelURLHvitevarer = 'https://teachablemachine.withgoogle.com/models/vnHMtHbDj/';
+let modelURLHvitevarer = 'https://teachablemachine.withgoogle.com/models/vih153yuj/';
 let modelURLStol = 'https://teachablemachine.withgoogle.com/models/ezH802a7a/';
 
 
