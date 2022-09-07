@@ -79,14 +79,14 @@ function gotResult(error, results) {
   document.getElementById("classified_confidence").innerHTML = "Confidence: " + nf(confidence, 0, 2);
   
   // Stol
-  if (label == "Stol"){
+  if (label == "Sofa"){
     let stol_underC = classifierStol.predict(img)
 
 
     stol_underC.then(function(results){
 
-      if (results[0].confidence < 0.9){
-        alert("Vi gjenkjente ikke hvilken stol du har valgt, prøv igjen.") 
+      if (results[0].confidence < 0.7){
+        alert("Vi gjenkjente ikke hvilken type sofa du har valgt, prøv igjen.") 
       }
       else {
         document.getElementById("classified_item").innerHTML = "Category:  " + (results[0].label) + "\n";
