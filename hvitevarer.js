@@ -6,8 +6,9 @@ let classifierStol;
 let img;
 
 // Checks wgich appliance is being classified and returns the correct object
-let modelURLHvitevarer = 'https://teachablemachine.withgoogle.com/models/vih153yuj/';
-let modelURLStol = 'https://teachablemachine.withgoogle.com/models/ezH802a7a/';
+let modelURLHvitevarer = 'https://teachablemachine.withgoogle.com/models/ZL010TeHk/';
+//let modelURLStol = 'https://teachablemachine.withgoogle.com/models/ezH802a7a/';
+let modelURLSofa = "https://teachablemachine.withgoogle.com/models/eCG1GaW07/";
 
 
 /**
@@ -15,7 +16,8 @@ let modelURLStol = 'https://teachablemachine.withgoogle.com/models/ezH802a7a/';
  */
 function preload() {
     classifier = ml5.imageClassifier(modelURLHvitevarer + 'model.json');
-    classifierStol = ml5.imageClassifier(modelURLStol + 'model.json');
+    //classifierStol = ml5.imageClassifier(modelURLStol + 'model.json');
+    classifierStol = ml5.imageClassifier(modelURLSofa + 'model.json');
 }
 
 // 
@@ -58,6 +60,8 @@ function gotResult(error, results) {
   const label = results[0].label;
   const confidence = nf(results[0].confidence, 0, 2);
 
+  console.log(results)
+
   // Display error in the console, and return
   if (error) {
     console.error(error);
@@ -65,7 +69,7 @@ function gotResult(error, results) {
     return
   }
 
-  if (confidence < 0.9){
+  if (confidence < 0.7){
     alert("Vi gjenkjente ikke objektet, prøv igjen.")
     console.log(label, confidence)
     return;

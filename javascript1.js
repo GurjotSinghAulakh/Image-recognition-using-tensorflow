@@ -4,7 +4,7 @@ let classifier;
 // A variable to hold the image we want to classify
 let img;
 
-let modelURL = 'https://teachablemachine.withgoogle.com/models/vih153yuj/';
+let modelURL = 'https://teachablemachine.withgoogle.com/models/ZL010TeHk/';
 
 function preload() {
     classifier = ml5.imageClassifier(modelURL + 'model.json');
