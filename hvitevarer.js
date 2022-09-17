@@ -97,12 +97,18 @@ function gotResult(error, results) {
 }
 
 
+// prøver med addEvenetlistenere
+const image_input = document.querySelector("#image-input");
 
-// function classifyStol(img){
-//   return classifierStol.predict(img, gotResult);
-// }
+image_input.addEventListener("change", function() {
+  const reader = new FileReader();
+  reader.addEventListener("load", () => {
+    const uploaded_image = reader.result;
+    document.querySelector("#bildeKontainer").style.backgroundImage = `url(${uploaded_image})`;
+  });
+  reader.readAsDataURL(this.files[0]);
 
-
-
-//-----------------------------------finding the under-category----------------------------------
-
+  init().then(() => {
+    predict();
+  });
+});

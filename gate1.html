@@ -8,31 +8,23 @@
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
     <script src="gate1.js"></script>
+    <link rel="stylesheet" href="style.css">
     
 </head>
 <body>
-    <button onclick="init()">START</button>
-
     <a href="index.html">
         <h1>Image classification using Tensor Flow </h1>
     </a>
     <div class="container">
         <div class="outer">
             <div id="div_upload">
-            <input type="file" name="" id="imageUploaded">
+            <input type="file" accept="image/*" name="image" id="imageUploaded" onchange="loadFile()">
             Upload File
             </div>
         </div>
 
-    <div id="bildeKontainer"></div>
-    <div class="result">
-        <span id="classified_item"></span>
-        <br>
-        <span id="classified_confidence"></span>
+        <img id="imagePreview" style="height: 300px; margin: 10px 0; border-radius: 25px">
+        <div id="label-container"></div>
     </div>
-    </div>
-
-
-    <div id="label-container"></div>
 </body>
 </html>
