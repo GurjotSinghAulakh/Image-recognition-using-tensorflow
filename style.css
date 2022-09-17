@@ -2,7 +2,7 @@ body{
     display: flex;
     align-items: center;
     flex-direction: column;
-    background-color: #eb5e00cc;
+    background-color: lightblue;
 }
 
 a {
