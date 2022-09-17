@@ -35,9 +35,11 @@ function outputAllImages(startPath, filters){
 
 let img;
 
-for (let i = 0; i<1138; i++){
-  img = "bilder/stol/image"+i+".jpg"
-  classifyObj()
+function start(){
+  for (let i = 1; i<3; i++){
+    img = "./bilder/sofa/1.jpg"
+    classifyObj()
+  }
 }
 
 
@@ -47,8 +49,8 @@ let classifier;
 let classifierStol;
 
 // Checks wgich appliance is being classified and returns the correct object
-let modelURLHvitevarer = 'https://teachablemachine.withgoogle.com/models/vnHMtHbDj/';
-let modelURLStol = 'https://teachablemachine.withgoogle.com/models/ezH802a7a/';
+let modelURLHvitevarer = "https://teachablemachine.withgoogle.com/models/ZL010TeHk/";
+//let modelURLStol = 'https://teachablemachine.withgoogle.com/models/ezH802a7a/';
 
 
 /**
@@ -56,7 +58,7 @@ let modelURLStol = 'https://teachablemachine.withgoogle.com/models/ezH802a7a/';
  */
 function preload() {
     classifier = ml5.imageClassifier(modelURLHvitevarer + 'model.json');
-    classifierStol = ml5.imageClassifier(modelURLStol + 'model.json');
+    //classifierStol = ml5.imageClassifier(modelURLStol + 'model.json');
 }
 
 
@@ -93,17 +95,12 @@ function gotResult(error, results) {
     return
   }
 
-  if (confidence < 0.8){
-    alert("Vi gjenkjente ikke objektet, prøv igjen.")
-    console.log(label, confidence)
-    return;
-  }
 
   document.getElementById("classified_item").innerHTML = "Category:  " + (label) + "\n";
   document.getElementById("classified_confidence").innerHTML = "Confidence: " + nf(confidence, 0, 2);
   
   // Stol
-  if (label == "Stol"){
+  if (label == "Sofa"){
     let stol_underC = classifierStol.predict(img)
 
 
@@ -118,5 +115,6 @@ function gotResult(error, results) {
       }
     });
   }
+
 }
 
