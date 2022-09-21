@@ -15,6 +15,11 @@ let model_dictionary = [
     }
 ]
 
+// global classification results, we will use this to check if what AI guessed was right, based on human input.
+let classified_category_label;
+let classified_category_highest_probability;
+let classified_underCategory_label;
+let classified_underCategory_highest_probability;
 
 /******************************* Super Class *************************************/
 
@@ -60,8 +65,12 @@ class Obj_UnderCategory {
     }
 
     async predict() {
+
         var image = document.getElementById('imagePreview');
         var select = document.getElementById("select_under_category");
+
+        // emptying the select box
+        select.innerHTML = "";
 
         // predict can take in an image, video or canvas html element
         const prediction = await model.predict(image, false);
@@ -91,8 +100,11 @@ class Obj_UnderCategory {
             if (select.options[i].value === label) {
                 select.options[i].selected = "selected";
             }
-            
         }
+
+        // asserting/editing global variables
+        classified_underCategory_highest_probability = highest_probability;
+        classified_underCategory_label = label;
     }
 }
 
@@ -160,6 +172,7 @@ async function predict() {
 
 
     for (let i = 0; i < maxPredictions; i++) {
+        // creating div elements for perdiction_classnames
         labelContainer.childNodes[i].innerHTML = prediction[i].className + ": " + prediction[i].probability.toFixed(2);
 
         // Adding options to the select box
@@ -182,6 +195,10 @@ async function predict() {
         }
     }
 
+    // asserting/editing global variables
+    classified_category_highest_probability = highest_probability;
+    classified_category_label = label;
+
     // finding undercategory
     for (let i = 0; i < model_dictionary.length; i++){
         if (label === "Sofa" && label === model_dictionary[i].label){
@@ -194,4 +211,22 @@ async function predict() {
             stol.predictObj();
         }
     }
+}
+
+function changed_select(option) {
+    var label = option;
+
+     // finding undercategory
+    for (let i = 0; i < model_dictionary.length; i++){
+        if (label === "Sofa" && label === model_dictionary[i].label){
+            let sofa = new UnderCategory_Sofa(model_dictionary[i].label, model_dictionary[i].modelURL);
+            sofa.predictObj();
+        }
+
+        if (label === "Stol" && label === model_dictionary[i].label){
+            let stol = new UnderCategory_Stol(model_dictionary[i].label, model_dictionary[i].modelURL);
+            stol.predictObj();
+        }
+    }
+
 }
