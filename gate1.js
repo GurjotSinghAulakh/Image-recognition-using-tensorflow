@@ -4,6 +4,114 @@ let classifier;
 // A variable to hold the image we want to classify
 let img;
 
+let model_dictionary = [
+    {
+        "label": "Sofa",
+        "modelURL": "https://teachablemachine.withgoogle.com/models/eCG1GaW07/"
+    },
+    {
+        "label": "Stol",
+        "modelURL": "https://teachablemachine.withgoogle.com/models/GGrDbyj_b/"
+    }
+]
+
+
+/******************************* Super Class *************************************/
+
+class Obj_UnderCategory {
+
+    // "label", "link til modelen"
+    constructor(_label, _modelURL) {
+        this.modelURL = _modelURL;
+
+        // Må fjernes etter testinga er ferdig
+        this.label = _label;
+        this.model;
+    }
+
+    predictObj(){
+        this.init().then(() => {
+            this.predict();
+        })
+    }
+
+    // method
+    async init() {
+
+        console.log(this.label + " er initiert!")
+
+        // load the model and metadata
+        const modelURL = this.modelURL + "model.json";
+        const metadataURL = this.modelURL + "metadata.json";
+
+        // load the model and metadata
+        model = await tmImage.load(modelURL, metadataURL);
+        this.maxPredictions = model.getTotalClasses();
+
+
+        labelContainer = document.getElementById("label-container");
+        labelContainer.innerHTML = "";
+        for (let i = 0; i < this.maxPredictions; i++) {
+            // and class labels
+            labelContainer.appendChild(document.createElement("div"));
+        }
+
+        console.log(this.label + " er ferdig!")
+    }
+
+    async predict() {
+        var image = document.getElementById('imagePreview');
+        var select = document.getElementById("select_under_category");
+
+        // predict can take in an image, video or canvas html element
+        const prediction = await model.predict(image, false);
+
+        // Finding the right perdiction
+        let highest_probability = 0;
+        let label = "";
+
+        for (let i = 0; i < this.maxPredictions; i++) {
+            labelContainer.childNodes[i].innerHTML = prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+
+            // Adding options to the select box
+            var opt = document.createElement('option');
+            opt.value = prediction[i].className;
+            opt.innerHTML = prediction[i].className;
+            select.appendChild(opt);
+
+            // Finding the right perdiction (max-perdiction value)
+            if(prediction[i].probability > highest_probability){
+                highest_probability = prediction[i].probability;
+                label = prediction[i].className;
+            }
+        }
+
+        // Choosing the right option from the select dropdown
+        for (let i = 0; i < select.length; i++) {
+            if (select.options[i].value === label) {
+                select.options[i].selected = "selected";
+            }
+            
+        }
+    }
+}
+
+class UnderCategory_Sofa extends Obj_UnderCategory {
+
+    constructor(_label, _modelURL){
+        super(_label, _modelURL);
+        // console.log('We are '+_sofaProbability.toFixed(2)+' confident it is a Sofa');
+    }
+}
+
+class UnderCategory_Stol extends Obj_UnderCategory {
+
+    constructor(_label, _modelURL){
+        super(_label, _modelURL);
+        // console.log('We are '+_sofaProbability.toFixed(2)+' confident it is a Sofa');
+    }
+}
+
 // defining global variable picture & maxPredictions & model;
 let maxPredictions, model, labelContainer;
 
@@ -28,7 +136,6 @@ async function init() {
     console.log("Innit kjører")
 }
 
-
 function loadFile(event) {
     let image_object = document.getElementById("imageUploaded")
     let image_url = URL.createObjectURL(image_object.files[0])
@@ -40,92 +147,51 @@ function loadFile(event) {
     })
 }
 
-class Gate2Sofa{
-    constructor(_sofaProbability){
-        console.log('We are '+_sofaProbability.toFixed(2)+' confident it is a Sofa');
-        this.modelURLSofa = "https://teachablemachine.withgoogle.com/models/eCG1GaW07/";
-        this.model;
-    }
-
-    predictSofa(){
-        this.init_Sofa().then(() => {
-            this.predict();
-        })
-    }
-
-    // metod
-    async init_Sofa() {
-
-        console.log("Sofa er initiert!")
-
-        // load the model and metadata
-        const modelURL = this.modelURLSofa + "model.json";
-        const metadataURL = this.modelURLSofa + "metadata.json";
-    
-        // load the model and metadata
-        model = await tmImage.load(modelURL, metadataURL);
-        this.maxPredictionsSofa = model.getTotalClasses();
-    
-        
-        labelContainer = document.getElementById("label-container");
-        for (let i = 0; i < this.maxPredictionsSofa; i++) { 
-            // and class labels
-            labelContainer.appendChild(document.createElement("div"));
-        }
-
-        console.log("Sofa er ferdig!")
-    }
-
-    async predict() {
-        console.log("Starter sofa-prediction...")
-        var image = document.getElementById('imagePreview');
-    
-        // predict can take in an image, video or canvas html element
-        const prediction = await model.predict(image, false);
-
-        console.log("sofa perdiction:")
-        console.log(prediction)
-
-        for (let i = 0; i < this.maxPredictionsSofa; i++) {
-            const classPrediction =
-                prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-            labelContainer.childNodes[i].innerHTML = classPrediction;
-        }
-    }
-}
-
-
 async function predict() {
     var image = document.getElementById('imagePreview');
+    var select = document.getElementById("select_category");
 
     // predict can take in an image, video or canvas html element
     const prediction = await model.predict(image, false);
 
-    // finner størst sannsynlighet:
-    let storst_sannsynlight = 0;
-    let storst_sannsynlight_label = "";
-    
+    // Finding the right perdiction
+    let highest_probability = 0;
+    let label = "";
 
-    for (i=0; i<maxPredictions; i++){
-        if(prediction[i].probability > storst_sannsynlight){
-            storst_sannsynlight = prediction[i].probability;
-            storst_sannsynlight_label = prediction[i].className;
+
+    for (let i = 0; i < maxPredictions; i++) {
+        labelContainer.childNodes[i].innerHTML = prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+
+        // Adding options to the select box
+        var opt = document.createElement('option');
+        opt.value = prediction[i].className;
+        opt.innerHTML = prediction[i].className;
+        select.appendChild(opt);
+
+        // Finding the right perdiction (max-perdiction value)
+        if(prediction[i].probability > highest_probability){
+            highest_probability = prediction[i].probability;
+            label = prediction[i].className;
         }
     }
 
-    //console.log(storst_sannsynlight_label + " med sikkerhet på " + storst_sannsynlight + "%")
-    console.log(prediction)
-
-    for (let i = 0; i < maxPredictions; i++) {
-        const classPrediction =
-            prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-        labelContainer.childNodes[i].innerHTML = classPrediction;
+    // Choosing the right option from the select dropdown
+    for (i = 0; i < select.length; i++) {
+        if (select.options[i].value === label) {
+            select.options[i].selected = "selected";
+        }
     }
 
-    
-    if (storst_sannsynlight_label == "Sofa"){
-        let sofa = new Gate2Sofa(storst_sannsynlight);
-        sofa.predictSofa();
+    // finding undercategory
+    for (let i = 0; i < model_dictionary.length; i++){
+        if (label === "Sofa" && label === model_dictionary[i].label){
+            let sofa = new UnderCategory_Sofa(model_dictionary[i].label, model_dictionary[i].modelURL);
+            sofa.predictObj();
+        }
+
+        if (label === "Stol" && label === model_dictionary[i].label){
+            let stol = new UnderCategory_Stol(model_dictionary[i].label, model_dictionary[i].modelURL);
+            stol.predictObj();
+        }
     }
 }
-
