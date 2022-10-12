@@ -4,20 +4,42 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.min.js"></script>
-    <script src="https://unpkg.com/ml5@latest/dist/ml5.min.js"></script>
+    <title>Gate1</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="test.js"></script>
-    <title>Test</title>
+    <link rel="stylesheet" href="style.css">
+    
 </head>
 <body>
+    <a href="index.html">
+        <h1>Image classification using Tensor Flow </h1>
+    </a>
+    <div class="container">
+        <div class="outer">
+            <div id="div_upload">
+            <input type="file" accept="image/*" name="image" id="imageUploaded" onchange="loadFile()">
+            Upload File
+            </div>
+        </div>
 
-    <button style="background-color: orange;" onclick="start()"> START()</button>
+        <img id="imagePreview" style="height: 300px; margin: 10px 0; border-radius: 25px">
+        <div id="label-container"></div>
 
 
+        <div class="form">
+             <label for="select_category">Category:</label>
+                <select id="select_category" name="obj"></select>
+
+            <label for="select_under_category">Under Category:</label>
+                <select id="select_under_category" name="obj_undercategory"></select>
+        </div>
 
 
-    <div style="background-color:darksalmon" id="usikker">ll</div>
-    <div style="background-color: blue" id="sikker">oo</div>
-    
+        <button onclick="startTest()">START</button>
+        <button onclick="lastNedExcelSheet()">LAST NED (EXCEL)</button>
+
+    </div>
 </body>
 </html>

@@ -50,13 +50,12 @@ a {
 
 .container{
     width: 50%;
-    max-height: 60vh;
     border-radius: 10px;
     display: flex;
     align-items: center;
     flex-direction: column;
     background-color: white;
-    padding: 5% 5% 10% 5%;
+    padding: 15% 5% 20% 5%;
 }
 
 #bildeKontainer img{
@@ -87,23 +86,6 @@ a {
     font-size: 14px;
 }
 
-/*-------------------- bare for gate1.html -------------------*/
-.btn_bug{
-    background: #D22B2B;
-    margin-top: 30px; 
-}
-
-.feedback{
-    background-color: bisque;
-    margin-top: 5%;
-    font-size: larger;
-    position: relative;
-    width: 300px;
-    height: 100px;
-    text-align: center;
-    border-radius: 15px;
-}
-
 
 @media only screen and (max-width: 600px) {
     .container{
@@ -116,4 +98,3 @@ a {
         width: 90%;
   }
 }
-

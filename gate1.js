@@ -15,7 +15,6 @@ let model_dictionary = [
     }
 ]
 
-
 /******************************* Super Class *************************************/
 
 class Obj_UnderCategory {
@@ -90,11 +89,19 @@ class Obj_UnderCategory {
         for (let i = 0; i < select.length; i++) {
             if (select.options[i].value === label) {
                 select.options[i].selected = "selected";
-            }
-            
+            } 
         }
+
+        // BUG
+        prediction_array_gate2 = prediction;
     }
 }
+
+// BUG
+// for å raportere bug:
+var prediction_array_gate1;
+var prediction_array_gate2;
+
 
 class UnderCategory_Sofa extends Obj_UnderCategory {
 
@@ -110,6 +117,7 @@ class UnderCategory_Stol extends Obj_UnderCategory {
         super(_label, _modelURL);
         // console.log('We are '+_sofaProbability.toFixed(2)+' confident it is a Sofa');
     }
+    
 }
 
 // defining global variable picture & maxPredictions & model;
@@ -182,6 +190,9 @@ async function predict() {
         }
     }
 
+    //BUG
+    prediction_array_gate1 = prediction;
+
     // finding undercategory
     for (let i = 0; i < model_dictionary.length; i++){
         if (label === "Sofa" && label === model_dictionary[i].label){
@@ -194,4 +205,12 @@ async function predict() {
             stol.predictObj();
         }
     }
+}
+
+function reportBug(){
+    var feedback_div = document.getElementById("div_feedback");
+    feedback_div.innerText = "Takk for feedback!"
+    feedback_div.style.display = "block";
+    console.log(prediction_array_gate1);
+    console.log(prediction_array_gate2);
 }
