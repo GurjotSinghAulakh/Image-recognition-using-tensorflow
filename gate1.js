@@ -211,6 +211,19 @@ function reportBug(){
     var feedback_div = document.getElementById("div_feedback");
     feedback_div.innerText = "Takk for feedback!"
     feedback_div.style.display = "block";
+
     console.log(prediction_array_gate1);
     console.log(prediction_array_gate2);
+    
+    const image_object = document.getElementById("imagePreview");
+    //let image_url = URL.createObjectURL(image_object.files[0])
+
+    //document.getElementById("feedback_img").src = image_url;
+    console.log(image_object.src)
+
+    document.getElementById("BILDE") =  image_object.src;
+
+    // sender feedback
+    
+
 }
