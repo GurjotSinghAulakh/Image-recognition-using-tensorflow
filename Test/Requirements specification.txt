@@ -1,0 +1,3 @@
+We want to create a test file/script which will test the AI's perdiction correctness.
+The test will be run after we make a change to see overall confidence of correctness. 
+Firstly we have to create a test set (a set of images to test the AI).
